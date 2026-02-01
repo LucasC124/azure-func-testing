@@ -1,7 +1,12 @@
 import azure.functions as func
 import logging
+import random
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
+
+def randnum():
+    calc_num = random.randint(1, 10000)
+    return calc_num
 
 @app.route(route="http_trigger")
 def http_trigger(req: func.HttpRequest) -> func.HttpResponse:
@@ -19,7 +24,8 @@ def http_trigger(req: func.HttpRequest) -> func.HttpResponse:
     if name:
         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
     else:
-        return func.HttpResponse(
-             "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
-             status_code=200
-        )
+        return func.HttpResponse(f"Here's a random number for you... {randnum()}", status_code=200)
+        #return func.HttpResponse(
+        #     "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",
+        #     status_code=200
+        #)
